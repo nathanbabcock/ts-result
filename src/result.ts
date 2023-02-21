@@ -26,11 +26,18 @@ export class Result<T, E> {
   }
 
   /** Catch errors from a function and wrap them in a Result. */
-  static from<T>(f: (...args: any) => T, args: any[] = []): Result<T, any> {
+  static wrap<F extends (...args: any) => any>(
+    f: F,
+    args?: Parameters<F>
+  ): ReturnType<F> extends Result<any, any>
+    ? ReturnType<F>
+    : Result<ReturnType<F>, any> {
     try {
-      return Ok(f(...args))
+      const result = f(args)
+      if (result instanceof Result) return result as ReturnType<F>
+      else return Ok(result) as unknown as any
     } catch (err) {
-      return Err(err)
+      return Err(err) as unknown as any
     }
   }
 }

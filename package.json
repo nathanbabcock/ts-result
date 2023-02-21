@@ -1,6 +1,6 @@
 {
-  "name": "ts-result-v2",
-  "version": "1.0.0",
+  "name": "ts-result",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {

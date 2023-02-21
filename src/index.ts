@@ -9,11 +9,11 @@ function a(): Result<string, Error> {
   return Ok('asdf')
 }
 
-function b() {
+function b(): Result<string, Error> {
   const result = a()
 
   // Problem #1: Rust try (`?`) operator
-  const val = Result.from(myThrowFunc, [true]).try()
+  const val = Result.wrap(myThrowFunc, [true]).try()
   const newVal = val.toUpperCase()
 
   // Problem #2: Rust match
@@ -26,5 +26,6 @@ function b() {
 }
 
 function c() {
-  const result = Result.from(b)
+  const resultV1 = b()
+  const resultV2 = Result.wrap(b) // Error type is preserved (!)
 }
